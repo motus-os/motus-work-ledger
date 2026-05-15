@@ -22,6 +22,9 @@ implementation.
   `/motus` or `motusos`.
 - Extend conformance to validate event ordering, terminal close, event hashes,
   source-export linkage, and receipt projection consistency against Store facts.
+- Harden repository security posture with secret scanning, push protection,
+  Dependabot security updates, restricted Actions policy, and updated security
+  documentation.
 
 ## v0.1.0-alpha.1 - 2026-05-15
 
