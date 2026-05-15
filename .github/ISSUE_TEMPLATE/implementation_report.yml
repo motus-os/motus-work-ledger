@@ -1,0 +1,30 @@
+name: Implementation report
+description: Share an implementation of Motus-compatible Work Receipts.
+title: "[implementation] "
+labels: ["implementation"]
+body:
+  - type: input
+    id: implementation
+    attributes:
+      label: Implementation
+      description: Name or URL of the implementation.
+    validations:
+      required: true
+  - type: dropdown
+    id: level
+    attributes:
+      label: Claimed conformance level
+      options:
+        - Level 0 receipt-only
+        - Level 1 event-backed
+        - Level 2 governed handoff
+        - Level 3 verified provenance
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Validation evidence
+      description: Link or paste validator output, fixture names, and any known gaps.
+    validations:
+      required: true

@@ -1,0 +1,26 @@
+name: Conformance issue
+description: Report validator, fixture, or golden-hash behavior.
+title: "[conformance] "
+labels: ["conformance"]
+body:
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Observed behavior
+      description: What passed or failed unexpectedly?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Include command, fixture, and validator output.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should the conformance suite do?
+    validations:
+      required: true

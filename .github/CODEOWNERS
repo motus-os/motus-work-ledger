@@ -1,0 +1,8 @@
+# Default ownership for the Motus Work Ledger canonical repo.
+* @bnvoss
+
+# Conformance and schema surfaces require explicit owner review.
+/schemas/ @bnvoss
+/semconv/ @bnvoss
+/conformance/ @bnvoss
+/spec/ @bnvoss

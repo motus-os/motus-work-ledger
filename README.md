@@ -42,6 +42,13 @@ Work Journal -> Work Ledger -> Work Receipt
 - `examples/` - receipts for common human, AI, CI, and tool-driven work.
 - `docs/` - implementation, privacy, terminology, and adoption guidance.
 
+Versioning and release notes:
+
+- [Versioning](VERSIONING.md)
+- [Changelog](CHANGELOG.md)
+- [Schema Registry](schemas/index.json)
+- [Batch Recap Template](docs/batch-recap-template.md)
+
 ## Validate A Receipt
 
 Install the validator dependency:
@@ -92,4 +99,3 @@ Motus Work Ledger is not:
 
 Workflow tools do the work. Control planes steer the work. Motus records the
 work. Receipts prove the work.
-
