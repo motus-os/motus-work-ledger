@@ -49,6 +49,7 @@ Versioning and release notes:
 - [Schema Registry](schemas/index.json)
 - [Batch Recap Template](docs/batch-recap-template.md)
 - [External Review Package](docs/external-review-package.md)
+- [Controlled Design-Partner Pilot](docs/design-partner-pilot.md)
 
 ## Validate A Receipt
 
