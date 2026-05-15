@@ -24,6 +24,8 @@ python -m pip install -r conformance/validator/requirements.txt
 ## Validate Fixtures
 
 ```bash
+python conformance/validator/check_schema_registry.py
+python conformance/validator/check_conformance.py
 python conformance/validator/validate_receipt.py \
   conformance/fixtures/valid/work-receipt-minimal.json \
   conformance/fixtures/valid/work-receipt-github-action.json
@@ -56,4 +58,3 @@ docs: clarify Work Receipt envelope
 schema: tighten evidence redaction enum
 test: add invalid receipt fixture
 ```
-

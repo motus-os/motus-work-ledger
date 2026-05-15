@@ -10,6 +10,12 @@ the local registry in `schemas/index.json` or through the bundled validator.
 
 `schemas/index.json` maps each schema id to the repository path that defines it.
 
+Verify the registry:
+
+```bash
+python conformance/validator/check_schema_registry.py
+```
+
 ## Rules
 
 1. Keep `additionalProperties: false` wherever practical.

@@ -17,6 +17,7 @@ Describe the bounded change and why it is needed.
 ## Validation
 
 - [ ] `python conformance/validator/check_conformance.py`
+- [ ] `python conformance/validator/check_schema_registry.py`
 - [ ] `python conformance/validator/validate_receipt.py examples/*/receipt.json`
 - [ ] Semantic conventions and schema map checked when semconv changed
 - [ ] Schema versioning impact checked when schemas changed
