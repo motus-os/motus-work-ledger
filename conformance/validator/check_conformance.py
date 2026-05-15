@@ -29,6 +29,12 @@ EVENT_BACKED_EMITTER = (
 EVENT_BACKED_INPUT = (
     REPO_ROOT / "conformance" / "implementations" / "event-backed-python" / "input.example.json"
 )
+RECEIPT_ONLY_NODE_EMITTER = (
+    REPO_ROOT / "conformance" / "implementations" / "receipt-only-node" / "emit-receipt.mjs"
+)
+RECEIPT_ONLY_NODE_INPUT = (
+    REPO_ROOT / "conformance" / "implementations" / "receipt-only-node" / "input.example.json"
+)
 EVENT_KIND_SCHEMA_VERSION = "motus.event-kind-schema.v0.1"
 EVENT_KIND_SCHEMAS = {
     "work.started": {
@@ -139,6 +145,29 @@ def check_receipt_only_implementation() -> None:
                 str(RECEIPT_ONLY_EMITTER),
                 "--input",
                 str(RECEIPT_ONLY_INPUT),
+                "--output",
+                str(output),
+            ],
+            cwd=REPO_ROOT,
+            check=False,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        if result.returncode != 0:
+            raise AssertionError(result.stderr)
+        validate_file(output)
+
+
+def check_receipt_only_node_implementation() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        output = Path(tmp) / "receipt.json"
+        result = subprocess.run(
+            [
+                "node",
+                str(RECEIPT_ONLY_NODE_EMITTER),
+                "--input",
+                str(RECEIPT_ONLY_NODE_INPUT),
                 "--output",
                 str(output),
             ],
@@ -312,6 +341,7 @@ def main() -> int:
         check_invalid_fixture_files()
         check_invalid_patch_cases()
         check_receipt_only_implementation()
+        check_receipt_only_node_implementation()
         check_event_backed_implementation()
     except Exception as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
