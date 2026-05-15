@@ -29,6 +29,13 @@ EVENT_BACKED_EMITTER = (
 EVENT_BACKED_INPUT = (
     REPO_ROOT / "conformance" / "implementations" / "event-backed-python" / "input.example.json"
 )
+GOVERNED_HANDOFF_INPUT = (
+    REPO_ROOT
+    / "conformance"
+    / "implementations"
+    / "event-backed-python"
+    / "input.governed-handoff.json"
+)
 RECEIPT_ONLY_NODE_EMITTER = (
     REPO_ROOT / "conformance" / "implementations" / "receipt-only-node" / "emit-receipt.mjs"
 )
@@ -182,13 +189,13 @@ def check_receipt_only_node_implementation() -> None:
         validate_file(output)
 
 
-def run_event_backed(output_dir: Path) -> None:
+def run_event_backed(output_dir: Path, input_path: Path = EVENT_BACKED_INPUT) -> None:
     result = subprocess.run(
         [
             sys.executable,
             str(EVENT_BACKED_EMITTER),
             "--input",
-            str(EVENT_BACKED_INPUT),
+            str(input_path),
             "--output-dir",
             str(output_dir),
         ],
@@ -306,6 +313,86 @@ def check_receipt_projection_consistency(
         raise AssertionError("run closed_at does not match work.closed outcome")
 
 
+def check_governed_handoff_receipt(receipt: dict[str, Any]) -> None:
+    if receipt["route_summary"]["status"] != "handoff":
+        raise AssertionError("Level 2 route_summary status must be handoff")
+    if receipt["handoff"]["status"] != "ready":
+        raise AssertionError("Level 2 handoff status must be ready")
+    if receipt["acceptance"]["status"] != "pending":
+        raise AssertionError("Level 2 acceptance status must be pending")
+
+    next_actor = receipt["route_summary"].get("next_actor")
+    receiver = receipt["handoff"].get("receiver")
+    if not next_actor or not receiver:
+        raise AssertionError("Level 2 handoff must include next_actor and receiver")
+    if next_actor != receiver:
+        raise AssertionError("route_summary.next_actor must match handoff.receiver")
+    if receipt["acceptance"].get("actor") != receiver:
+        raise AssertionError("acceptance.actor must match handoff.receiver for pending handoff")
+
+    evidence_ids = {evidence["evidence_id"] for evidence in receipt["evidence_refs"]}
+    handoff_evidence = set(receipt["handoff"].get("evidence_refs", []))
+    if not handoff_evidence:
+        raise AssertionError("Level 2 handoff must reference evidence")
+    missing = sorted(handoff_evidence - evidence_ids)
+    if missing:
+        raise AssertionError(f"handoff references missing evidence ids: {missing}")
+
+
+def expect_governed_handoff_invalid(
+    base_receipt: dict[str, Any],
+    case: dict[str, Any],
+) -> None:
+    candidate = apply_case(base_receipt, case)
+    try:
+        check_governed_handoff_receipt(candidate)
+    except AssertionError as exc:
+        expected = case["expect"]
+        if expected not in str(exc):
+            raise AssertionError(
+                f"{case['name']}: expected {expected!r} in {exc!r}"
+            ) from exc
+        return
+    raise AssertionError(f"{case['name']}: expected Level 2 semantic failure")
+
+
+def check_governed_handoff_negative_cases(receipt: dict[str, Any]) -> None:
+    cases = [
+        {
+            "name": "route-receiver-mismatch",
+            "set": {"route_summary.next_actor.id": "different-owner"},
+            "expect": "route_summary.next_actor",
+        },
+        {
+            "name": "acceptance-actor-mismatch",
+            "set": {"acceptance.actor.id": "different-owner"},
+            "expect": "acceptance.actor",
+        },
+        {
+            "name": "empty-handoff-evidence",
+            "set": {"handoff.evidence_refs": []},
+            "expect": "reference evidence",
+        },
+        {
+            "name": "unknown-handoff-evidence",
+            "set": {"handoff.evidence_refs": ["missing-evidence"]},
+            "expect": "missing evidence ids",
+        },
+        {
+            "name": "missing-next-actor",
+            "remove": ["route_summary.next_actor"],
+            "expect": "next_actor",
+        },
+        {
+            "name": "missing-receiver",
+            "remove": ["handoff.receiver"],
+            "expect": "receiver",
+        },
+    ]
+    for case in cases:
+        expect_governed_handoff_invalid(receipt, case)
+
+
 def check_event_backed_implementation() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         first = Path(tmp) / "first"
@@ -335,6 +422,26 @@ def check_event_backed_implementation() -> None:
         check_receipt_projection_consistency(store_export, receipt)
 
 
+def check_governed_handoff_implementation() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        output_dir = Path(tmp)
+        run_event_backed(output_dir, GOVERNED_HANDOFF_INPUT)
+
+        store_export = load_json(output_dir / "store-export.json")
+        projection_manifest = load_json(output_dir / "projection-manifest.json")
+        receipt = load_json(output_dir / "receipt.json")
+
+        validate_schema(store_export, STORE_EXPORT_SCHEMA_ID)
+        validate_schema(projection_manifest, PROJECTION_MANIFEST_SCHEMA_ID)
+        validate_file(output_dir / "receipt.json")
+        check_event_ordering(store_export)
+        check_event_hashes(store_export)
+        check_source_export_hashes(store_export, receipt, projection_manifest)
+        check_receipt_projection_consistency(store_export, receipt)
+        check_governed_handoff_receipt(receipt)
+        check_governed_handoff_negative_cases(receipt)
+
+
 def main() -> int:
     try:
         check_valid_fixtures()
@@ -343,6 +450,7 @@ def main() -> int:
         check_receipt_only_implementation()
         check_receipt_only_node_implementation()
         check_event_backed_implementation()
+        check_governed_handoff_implementation()
     except Exception as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
