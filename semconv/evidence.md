@@ -10,4 +10,4 @@ Evidence attributes describe proof referenced by receipts or events.
 | `evidence.digest` | Required | digest object | Hash of referenced evidence using declared canonicalization. |
 | `evidence.summary` | Recommended | string | Short summary safe for the receipt. |
 | `evidence.redaction.status` | Required | enum | One of `none`, `redacted`, or `withheld`. |
-| `evidence.retention` | Optional | string | Retention class or retention period if known. |
+| `evidence.retention` | Optional telemetry | string | Retention class or retention period if known. |
