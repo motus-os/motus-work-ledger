@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/conformance/validator"
+    target-branch: "main"
+    schedule:
+      interval: "monthly"
+      day: "monday"
+      time: "06:00"
+      timezone: "UTC"
+    # Disable routine chore/version-bump PR churn.
+    # Security advisories are handled by GitHub Dependabot security updates.
+    open-pull-requests-limit: 0
+    labels:
+      - "dependencies"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
