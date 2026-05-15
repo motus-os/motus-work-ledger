@@ -1,0 +1,43 @@
+{
+  "schema_registry_version": "motus.schema-registry.v0.1",
+  "base_uri": "https://motus.dev/schemas/",
+  "resolution": "Use local repository paths until motus.dev serves these schema identifiers directly.",
+  "schemas": [
+    {
+      "id": "https://motus.dev/schemas/acceptance.schema.json",
+      "path": "schemas/acceptance.schema.json"
+    },
+    {
+      "id": "https://motus.dev/schemas/evidence-ref.schema.json",
+      "path": "schemas/evidence-ref.schema.json"
+    },
+    {
+      "id": "https://motus.dev/schemas/handoff.schema.json",
+      "path": "schemas/handoff.schema.json"
+    },
+    {
+      "id": "https://motus.dev/schemas/projection-manifest.schema.json",
+      "path": "schemas/projection-manifest.schema.json"
+    },
+    {
+      "id": "https://motus.dev/schemas/route-summary.schema.json",
+      "path": "schemas/route-summary.schema.json"
+    },
+    {
+      "id": "https://motus.dev/schemas/store-export.schema.json",
+      "path": "schemas/store-export.schema.json"
+    },
+    {
+      "id": "https://motus.dev/schemas/work-event.schema.json",
+      "path": "schemas/work-event.schema.json"
+    },
+    {
+      "id": "https://motus.dev/schemas/work-receipt-envelope.schema.json",
+      "path": "schemas/work-receipt-envelope.schema.json"
+    },
+    {
+      "id": "https://motus.dev/schemas/work-run.schema.json",
+      "path": "schemas/work-run.schema.json"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+name: Schema change
+description: Propose or report a Work Ledger schema change.
+title: "[schema] "
+labels: ["schema"]
+body:
+  - type: textarea
+    id: change
+    attributes:
+      label: Proposed change
+      description: What schema field, enum, or object should change?
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility impact
+      description: Is this additive, clarifying, or breaking?
+    validations:
+      required: true
+  - type: textarea
+    id: conformance
+    attributes:
+      label: Conformance impact
+      description: What fixtures, validator checks, or examples should change?
+    validations:
+      required: true

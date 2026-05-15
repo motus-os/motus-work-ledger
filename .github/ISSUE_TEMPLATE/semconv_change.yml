@@ -1,0 +1,26 @@
+name: Semantic convention change
+description: Propose or report a semantic convention change.
+title: "[semconv] "
+labels: ["semconv"]
+body:
+  - type: textarea
+    id: attribute
+    attributes:
+      label: Attribute or mapping
+      description: Name the dotted attribute and its schema-map target.
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: Why is this needed for interoperable Work Receipts?
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation
+      description: What receipt or fixture proves the attribute remains schema-compatible?
+    validations:
+      required: true
