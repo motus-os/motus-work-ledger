@@ -10,6 +10,15 @@ implementation.
 
 - No unreleased changes.
 
+## v0.1.0-alpha.3 - 2026-05-15
+
+- Add a dependency-free Node.js Level 0 receipt-only implementation that emits
+  a strict Work Receipt without importing `/motus` or `motusos`.
+- Pin Node 20 in Quality Gates so the Node implementation is verified in CI.
+- Add Level 2 governed handoff conformance over the existing strict receipt
+  schemas, including route/handoff receiver alignment, pending acceptance actor
+  alignment, evidence-reference preservation, and negative semantic checks.
+
 ## v0.1.0-alpha.2 - 2026-05-15
 
 - Fix semantic-convention/schema-map alignment for strict Work Receipt fields.
