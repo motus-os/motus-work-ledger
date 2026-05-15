@@ -10,6 +10,19 @@ implementation.
 
 - No unreleased changes.
 
+## v0.1.0-alpha.2 - 2026-05-15
+
+- Fix semantic-convention/schema-map alignment for strict Work Receipt fields.
+- Add a Quality Gates check that blocks strict semantic attributes missing from
+  `semconv/schema-map.md`.
+- Add a controlled design-partner pilot packet with falsifiable success and
+  failure criteria, privacy boundaries, and stop/remove guidance.
+- Add a Level 1 event-backed Python implementation that emits a Store export,
+  derives a Work Receipt, and emits a projection manifest without importing
+  `/motus` or `motusos`.
+- Extend conformance to validate event ordering, terminal close, event hashes,
+  source-export linkage, and receipt projection consistency against Store facts.
+
 ## v0.1.0-alpha.1 - 2026-05-15
 
 - Add repository governance templates and schema registry documentation.
