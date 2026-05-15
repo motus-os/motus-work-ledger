@@ -9,6 +9,22 @@ objects unless the schema explicitly allows them.
 If an attribute is not listed here, it either already matches the schema field
 name directly or is metadata outside the current receipt envelope schemas.
 
+## Work
+
+Schema: `schemas/work-receipt-envelope.schema.json`
+
+| Semantic attribute | Schema path | Allowed values |
+| --- | --- | --- |
+| `work.id` | `work_id` | string |
+| `work.outcome.status` | `outcome.status` | `success`, `failure`, `partial`, `aborted`, `superseded`, `unknown` |
+| `work.outcome.summary` | `outcome.summary` | string |
+| `work.closed_at` | `outcome.closed_at` | RFC 3339 string |
+| `work.intent` | `instruction_ref.summary` | string |
+| `work.contract.ref` | `instruction_ref.uri` | string |
+
+`work.type` and `work.started_at` are event or telemetry metadata in v0.1.
+They must not be emitted as extra fields inside a strict Work Receipt Envelope.
+
 ## Evidence Reference
 
 Schema: `schemas/evidence-ref.schema.json`
@@ -31,6 +47,9 @@ Schema: `schemas/work-receipt-envelope.schema.json#/$defs/actor`
 | `actor.type` | `actor.type` | `human`, `agent`, `service`, `ci`, `tool` |
 | `actor.id` | `actor.id` | string |
 | `actor.display` | `actor.display` | string |
+
+`actor.authn.method` and `actor.org` are telemetry metadata in v0.1. They must
+not be emitted as extra fields inside a strict receipt-envelope actor object.
 
 ## Acceptance
 

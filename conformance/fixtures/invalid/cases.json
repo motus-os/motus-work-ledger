@@ -60,6 +60,21 @@
     "expect": "Additional properties"
   },
   {
+    "name": "work-semconv-dotted-field-in-receipt",
+    "literal_set": {"work.id": "WORK-123"},
+    "expect": "Additional properties"
+  },
+  {
+    "name": "actor-extra-authn-field",
+    "set": {"actor.authn": {"method": "oidc"}},
+    "expect": "Additional properties"
+  },
+  {
+    "name": "actor-extra-org-field",
+    "set": {"actor.org": "example-team"},
+    "expect": "Additional properties"
+  },
+  {
     "name": "invalid-timestamp",
     "set": {"created_at": "not-a-date"},
     "expect": "date-time"
