@@ -1,0 +1,117 @@
+{
+  "acceptance": {
+    "actor": {
+      "id": "reviewer",
+      "type": "human"
+    },
+    "method": "pull_request_review",
+    "status": "pending"
+  },
+  "actor": {
+    "display": "Codex CLI",
+    "id": "codex-cli",
+    "type": "agent"
+  },
+  "canonicalization": {
+    "method": "json.sorted.compact.v0",
+    "volatile_fields": [
+      "created_at"
+    ]
+  },
+  "created_at": "2026-05-15T14:10:01Z",
+  "events_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "43d7630a76e531c76999026c1d4fd25f14f9285f25491b8bf2568d05d183d9e2"
+    },
+    "uri": "file://examples/ai-coding-run/events.json"
+  },
+  "evidence_refs": [
+    {
+      "digest": {
+        "algorithm": "sha256",
+        "canonicalization": "utf8.log.v0",
+        "value": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "evidence_id": "pytest-parser",
+      "kind": "test_result",
+      "redaction": {
+        "status": "none"
+      },
+      "summary": "Parser test suite passed",
+      "uri": "file://examples/ai-coding-run/pytest.log"
+    }
+  ],
+  "handoff": {
+    "evidence_refs": [
+      "pytest-parser"
+    ],
+    "expected_action": "Review patch and test evidence",
+    "receiver": {
+      "id": "reviewer",
+      "type": "human"
+    },
+    "status": "ready"
+  },
+  "hashes": {
+    "receipt": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "e1b04fb9feb912f9093d5bca134625d7f376a78ceac707dd575842c3555b38f2"
+    },
+    "source_export": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "43d7630a76e531c76999026c1d4fd25f14f9285f25491b8bf2568d05d183d9e2"
+    }
+  },
+  "instruction_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "utf8.instruction.v0",
+      "value": "19d9bccc8f29b8f7073b5bf307c14f8e13cc240c3345335f827857b6ce0399b8"
+    },
+    "kind": "prompt",
+    "summary": "Implement a focused bug fix and run tests"
+  },
+  "outcome": {
+    "closed_at": "2026-05-15T14:10:00Z",
+    "status": "success",
+    "summary": "Parser bug fixed and tests passed"
+  },
+  "receipt_id": "sha256:e1b04fb9feb912f9093d5bca134625d7f376a78ceac707dd575842c3555b38f2",
+  "redaction": {
+    "status": "none"
+  },
+  "route_summary": {
+    "next_actor": {
+      "id": "reviewer",
+      "type": "human"
+    },
+    "reason": "Human review required before merge",
+    "status": "handoff"
+  },
+  "run_id": "example_ai_coding_run_001",
+  "runtime": {
+    "kind": "sdk",
+    "name": "motus-receipt-only-python",
+    "version": "0.1.0"
+  },
+  "schema_version": "motus.work-receipt-envelope.v0.1",
+  "tool_refs": [
+    {
+      "kind": "test_runner",
+      "name": "pytest"
+    },
+    {
+      "kind": "vcs",
+      "name": "git"
+    }
+  ],
+  "trigger": {
+    "kind": "manual",
+    "ref": "local-dev-session"
+  },
+  "work_id": "EXAMPLE-AI-CODING-001"
+}

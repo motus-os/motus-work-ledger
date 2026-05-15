@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://motus.dev/schemas/evidence-ref.schema.json",
+  "title": "Motus Evidence Reference",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidence_id", "kind", "digest", "redaction"],
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "uri": {
+      "type": "string"
+    },
+    "digest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "value", "canonicalization"],
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "enum": ["sha256"]
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "canonicalization": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "summary": {
+      "type": "string"
+    },
+    "redaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["none", "redacted", "withheld"]
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

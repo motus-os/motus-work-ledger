@@ -1,0 +1,6 @@
+Motus Work Ledger
+Copyright (c) 2024-2026 Veritas Collaborative, LLC.
+
+This software includes third-party components distributed under their own licenses.
+For validator dependency details, see:
+- conformance/validator/requirements.txt

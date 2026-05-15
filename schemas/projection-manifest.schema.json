@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://motus.dev/schemas/projection-manifest.schema.json",
+  "title": "Motus Projection Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "projection_id", "source_export_hash", "generated_at", "projections"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "motus.projection-manifest.v0.1"
+    },
+    "projection_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_export_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "canonicalization": {
+      "type": "string"
+    },
+    "projections": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "digest"],
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string"
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://motus.dev/schemas/route-summary.schema.json",
+  "title": "Motus Route Summary Projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["complete", "handoff", "blocked", "none"]
+    },
+    "next_actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["human", "agent", "service", "ci", "tool"]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "reason": {
+      "type": "string"
+    },
+    "route_ref": {
+      "type": "string"
+    }
+  }
+}

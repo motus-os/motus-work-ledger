@@ -1,0 +1,67 @@
+[
+  {
+    "name": "missing-actor-id",
+    "remove": ["actor.id"],
+    "expect": "actor"
+  },
+  {
+    "name": "missing-actor-type",
+    "remove": ["actor.type"],
+    "expect": "actor"
+  },
+  {
+    "name": "invalid-actor-type",
+    "set": {"actor.type": "robot"},
+    "expect": "actor"
+  },
+  {
+    "name": "missing-evidence-digest",
+    "remove": ["evidence_refs.0.digest"],
+    "expect": "digest"
+  },
+  {
+    "name": "invalid-evidence-redaction",
+    "set": {"evidence_refs.0.redaction.status": "partial"},
+    "expect": "redaction"
+  },
+  {
+    "name": "invalid-acceptance-status",
+    "set": {"acceptance.status": "unknown"},
+    "expect": "acceptance"
+  },
+  {
+    "name": "invalid-route-status",
+    "set": {"route_summary.status": "next"},
+    "expect": "route_summary"
+  },
+  {
+    "name": "invalid-handoff-status",
+    "set": {"handoff.status": "sent"},
+    "expect": "handoff"
+  },
+  {
+    "name": "unknown-additional-property",
+    "set": {"unexpected": true},
+    "expect": "Additional properties"
+  },
+  {
+    "name": "mismatched-receipt-id",
+    "set": {"receipt_id": "sha256:0000000000000000000000000000000000000000000000000000000000000000"},
+    "expect": "receipt_id mismatch"
+  },
+  {
+    "name": "mismatched-receipt-hash",
+    "set": {"hashes.receipt.value": "0000000000000000000000000000000000000000000000000000000000000000"},
+    "expect": "hashes.receipt.value mismatch"
+  },
+  {
+    "name": "semconv-dotted-fields-in-receipt",
+    "literal_set": {"evidence.hash": "sha256:abc"},
+    "expect": "Additional properties"
+  },
+  {
+    "name": "invalid-timestamp",
+    "set": {"created_at": "not-a-date"},
+    "expect": "date-time"
+  }
+]

@@ -1,0 +1,73 @@
+{
+  "run_id": "example_failed_run_001",
+  "work_id": "EXAMPLE-FAILED-001",
+  "actor": {
+    "type": "tool",
+    "id": "migration-script"
+  },
+  "trigger": {
+    "kind": "manual",
+    "ref": "operator-request"
+  },
+  "instruction": {
+    "kind": "command",
+    "summary": "Run a dry-run migration",
+    "canonical_text": "Run the dry-run migration and stop if validation fails."
+  },
+  "events": {
+    "uri": "file://examples/failed-run/events.json",
+    "count": 3
+  },
+  "evidence_refs": [
+    {
+      "evidence_id": "migration-error-log",
+      "kind": "log_excerpt",
+      "uri": "file://examples/failed-run/error.log",
+      "digest": {
+        "algorithm": "sha256",
+        "value": "3333333333333333333333333333333333333333333333333333333333333333",
+        "canonicalization": "utf8.redacted-log.v0"
+      },
+      "summary": "Validation failed before write phase",
+      "redaction": {
+        "status": "redacted",
+        "reason": "Log contains customer identifiers"
+      }
+    }
+  ],
+  "tool_refs": [
+    {
+      "name": "migration-script",
+      "kind": "database_tool"
+    }
+  ],
+  "outcome": {
+    "status": "failure",
+    "summary": "Dry-run validation failed before any writes",
+    "closed_at": "2026-05-15T14:30:00Z"
+  },
+  "acceptance": {
+    "status": "rejected",
+    "actor": {
+      "type": "human",
+      "id": "operator"
+    },
+    "accepted_at": "2026-05-15T14:30:20Z",
+    "method": "operator_review",
+    "rationale_ref": "file://examples/failed-run/rejection.md"
+  },
+  "route_summary": {
+    "status": "blocked",
+    "reason": "Input data must be corrected before retry"
+  },
+  "handoff": {
+    "status": "blocked",
+    "reason": "Awaiting corrected input data",
+    "evidence_refs": ["migration-error-log"]
+  },
+  "redaction": {
+    "status": "redacted",
+    "summary": "Customer identifiers withheld from the receipt"
+  },
+  "created_at": "2026-05-15T14:30:21Z"
+}

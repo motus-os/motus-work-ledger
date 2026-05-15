@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://motus.dev/schemas/acceptance.schema.json",
+  "title": "Motus Acceptance",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "method"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["accepted", "rejected", "not_required", "pending"]
+    },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["human", "agent", "service", "ci", "tool"]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "accepted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "method": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rationale_ref": {
+      "type": "string"
+    }
+  }
+}

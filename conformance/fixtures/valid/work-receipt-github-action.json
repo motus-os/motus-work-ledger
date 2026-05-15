@@ -1,0 +1,101 @@
+{
+  "schema_version": "motus.work-receipt-envelope.v0.1",
+  "receipt_id": "sha256:30959c1ab08b4b364c1a8c202c58dd7c9f01e25c7a24f918ca92461fa1e5e4fd",
+  "run_id": "gha_1234567890_attempt_1",
+  "work_id": "ci:pytest",
+  "actor": {
+    "type": "ci",
+    "id": "github-actions"
+  },
+  "runtime": {
+    "name": "github-actions-receipt-emitter",
+    "kind": "ci",
+    "version": "0.1.0"
+  },
+  "trigger": {
+    "kind": "ci",
+    "ref": "pull_request"
+  },
+  "instruction_ref": {
+    "kind": "command",
+    "uri": "github://motus-os/motus/actions/runs/1234567890",
+    "summary": "pytest",
+    "digest": {
+      "algorithm": "sha256",
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "canonicalization": "utf8.command.v0"
+    }
+  },
+  "events_ref": {
+    "uri": "artifact://motus-run-export.json",
+    "digest": {
+      "algorithm": "sha256",
+      "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "canonicalization": "json.sorted.compact.v0"
+    }
+  },
+  "evidence_refs": [
+    {
+      "evidence_id": "pytest-summary",
+      "kind": "test_summary",
+      "uri": "artifact://pytest-summary.json",
+      "summary": "pytest completed with no failures",
+      "digest": {
+        "algorithm": "sha256",
+        "value": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "canonicalization": "json.sorted.compact.v0"
+      },
+      "redaction": {
+        "status": "none"
+      }
+    }
+  ],
+  "tool_refs": [
+    {
+      "name": "pytest",
+      "kind": "test_runner"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "summary": "command exited 0",
+    "closed_at": "2026-05-14T15:00:01Z"
+  },
+  "acceptance": {
+    "status": "accepted",
+    "actor": {
+      "type": "ci",
+      "id": "github-actions"
+    },
+    "accepted_at": "2026-05-14T15:00:01Z",
+    "method": "exit_code_0"
+  },
+  "route_summary": {
+    "status": "complete"
+  },
+  "handoff": {
+    "status": "none"
+  },
+  "canonicalization": {
+    "method": "json.sorted.compact.v0",
+    "volatile_fields": [
+      "created_at"
+    ]
+  },
+  "hashes": {
+    "receipt": {
+      "algorithm": "sha256",
+      "value": "30959c1ab08b4b364c1a8c202c58dd7c9f01e25c7a24f918ca92461fa1e5e4fd",
+      "canonicalization": "json.sorted.compact.v0"
+    },
+    "source_export": {
+      "algorithm": "sha256",
+      "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "canonicalization": "json.sorted.compact.v0"
+    }
+  },
+  "redaction": {
+    "status": "none"
+  },
+  "created_at": "2026-05-14T15:00:02Z"
+}

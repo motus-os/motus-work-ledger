@@ -1,0 +1,68 @@
+{
+  "run_id": "example_ci_run_001",
+  "work_id": "EXAMPLE-CI-001",
+  "actor": {
+    "type": "ci",
+    "id": "github-actions",
+    "display": "GitHub Actions"
+  },
+  "trigger": {
+    "kind": "ci",
+    "ref": "pull_request:42"
+  },
+  "instruction": {
+    "kind": "workflow",
+    "summary": "Run build, tests, and lint for a pull request",
+    "canonical_text": "Execute the CI workflow for pull_request 42 and produce a receipt for the checks."
+  },
+  "events": {
+    "uri": "file://examples/ci-run/events.json",
+    "count": 4
+  },
+  "evidence_refs": [
+    {
+      "evidence_id": "ci-summary",
+      "kind": "ci_check",
+      "uri": "https://github.example/actions/runs/1001",
+      "digest": {
+        "algorithm": "sha256",
+        "value": "2222222222222222222222222222222222222222222222222222222222222222",
+        "canonicalization": "utf8.summary.v0"
+      },
+      "summary": "Build, lint, and tests passed",
+      "redaction": {
+        "status": "none"
+      }
+    }
+  ],
+  "tool_refs": [
+    {
+      "name": "github-actions",
+      "kind": "ci"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "summary": "CI checks passed",
+    "closed_at": "2026-05-15T14:20:00Z"
+  },
+  "acceptance": {
+    "status": "accepted",
+    "actor": {
+      "type": "ci",
+      "id": "branch-protection"
+    },
+    "accepted_at": "2026-05-15T14:20:05Z",
+    "method": "required_check_pass"
+  },
+  "route_summary": {
+    "status": "complete"
+  },
+  "handoff": {
+    "status": "none"
+  },
+  "redaction": {
+    "status": "none"
+  },
+  "created_at": "2026-05-15T14:20:06Z"
+}

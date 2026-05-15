@@ -1,0 +1,112 @@
+{
+  "acceptance": {
+    "actor": {
+      "id": "service-owner",
+      "type": "human"
+    },
+    "method": "handoff_acceptance",
+    "status": "pending"
+  },
+  "actor": {
+    "id": "engineer-a",
+    "type": "human"
+  },
+  "canonicalization": {
+    "method": "json.sorted.compact.v0",
+    "volatile_fields": [
+      "created_at"
+    ]
+  },
+  "created_at": "2026-05-15T14:40:01Z",
+  "events_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "be61a23a82c1c898cfb11e157e1a7e280467f72419fa2bb54f004441c8e4ff28"
+    },
+    "uri": "file://examples/handoff/events.json"
+  },
+  "evidence_refs": [
+    {
+      "digest": {
+        "algorithm": "sha256",
+        "canonicalization": "utf8.markdown.v0",
+        "value": "4444444444444444444444444444444444444444444444444444444444444444"
+      },
+      "evidence_id": "incident-timeline",
+      "kind": "timeline",
+      "redaction": {
+        "status": "none"
+      },
+      "summary": "Incident timeline and observed impact",
+      "uri": "file://examples/handoff/timeline.md"
+    }
+  ],
+  "handoff": {
+    "evidence_refs": [
+      "incident-timeline"
+    ],
+    "expected_action": "Approve and schedule remediation",
+    "receiver": {
+      "id": "service-owner",
+      "type": "human"
+    },
+    "status": "ready"
+  },
+  "hashes": {
+    "receipt": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "6fa7e6c52d6a66df51635784381a431ba2450f4b8375706086e522f080dba270"
+    },
+    "source_export": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "be61a23a82c1c898cfb11e157e1a7e280467f72419fa2bb54f004441c8e4ff28"
+    }
+  },
+  "instruction_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "utf8.instruction.v0",
+      "value": "27355b16c8a88f9b1b3039d4c7ba58ff7725603f97235ceec9034b18faae1df8"
+    },
+    "kind": "ticket",
+    "summary": "Investigate an incident and prepare the next action"
+  },
+  "outcome": {
+    "closed_at": "2026-05-15T14:40:00Z",
+    "status": "partial",
+    "summary": "Root cause narrowed, remediation pending"
+  },
+  "receipt_id": "sha256:6fa7e6c52d6a66df51635784381a431ba2450f4b8375706086e522f080dba270",
+  "redaction": {
+    "status": "none"
+  },
+  "route_summary": {
+    "next_actor": {
+      "id": "service-owner",
+      "type": "human"
+    },
+    "reason": "Service owner must approve remediation",
+    "status": "handoff"
+  },
+  "run_id": "example_handoff_001",
+  "runtime": {
+    "kind": "sdk",
+    "name": "motus-receipt-only-python",
+    "version": "0.1.0"
+  },
+  "schema_version": "motus.work-receipt-envelope.v0.1",
+  "tool_refs": [
+    {
+      "kind": "monitoring",
+      "name": "observability-dashboard"
+    }
+  ],
+  "trigger": {
+    "kind": "manual",
+    "ref": "incident-follow-up"
+  },
+  "work_id": "EXAMPLE-HANDOFF-001"
+}

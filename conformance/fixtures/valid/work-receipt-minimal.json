@@ -1,0 +1,101 @@
+{
+  "schema_version": "motus.work-receipt-envelope.v0.1",
+  "receipt_id": "sha256:953ee5238a3e7b9f3edf3e26a77246fe2e6ab514d9c7bcaa674c048607b53b12",
+  "run_id": "run_01778778121217502000_3a65ca7e613c",
+  "work_id": "ADHOC-MINIMAL-001",
+  "actor": {
+    "type": "agent",
+    "id": "example-agent"
+  },
+  "runtime": {
+    "name": "motus-compatible-example",
+    "kind": "sdk",
+    "version": "0.1.0"
+  },
+  "trigger": {
+    "kind": "manual",
+    "ref": "operator"
+  },
+  "instruction_ref": {
+    "kind": "command",
+    "summary": "python -c print ok",
+    "digest": {
+      "algorithm": "sha256",
+      "value": "1111111111111111111111111111111111111111111111111111111111111111",
+      "canonicalization": "utf8.command.v0"
+    }
+  },
+  "events_ref": {
+    "uri": "artifact://motus-run-export.json",
+    "digest": {
+      "algorithm": "sha256",
+      "value": "2222222222222222222222222222222222222222222222222222222222222222",
+      "canonicalization": "json.sorted.compact.v0"
+    }
+  },
+  "evidence_refs": [
+    {
+      "evidence_id": "command-output-summary",
+      "kind": "output_metadata",
+      "summary": "stdout line count and exit status only",
+      "digest": {
+        "algorithm": "sha256",
+        "value": "3333333333333333333333333333333333333333333333333333333333333333",
+        "canonicalization": "json.sorted.compact.v0"
+      },
+      "redaction": {
+        "status": "redacted",
+        "reason": "raw stdout is not persisted by default"
+      }
+    }
+  ],
+  "tool_refs": [
+    {
+      "name": "python",
+      "kind": "interpreter"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "summary": "command exited 0",
+    "closed_at": "2026-05-14T15:00:01Z"
+  },
+  "acceptance": {
+    "status": "accepted",
+    "actor": {
+      "type": "agent",
+      "id": "example-agent"
+    },
+    "accepted_at": "2026-05-14T15:00:01Z",
+    "method": "terminal_outcome"
+  },
+  "route_summary": {
+    "status": "complete"
+  },
+  "handoff": {
+    "status": "none"
+  },
+  "canonicalization": {
+    "method": "json.sorted.compact.v0",
+    "volatile_fields": [
+      "created_at"
+    ]
+  },
+  "hashes": {
+    "receipt": {
+      "algorithm": "sha256",
+      "value": "953ee5238a3e7b9f3edf3e26a77246fe2e6ab514d9c7bcaa674c048607b53b12",
+      "canonicalization": "json.sorted.compact.v0"
+    },
+    "source_export": {
+      "algorithm": "sha256",
+      "value": "2222222222222222222222222222222222222222222222222222222222222222",
+      "canonicalization": "json.sorted.compact.v0"
+    }
+  },
+  "redaction": {
+    "status": "redacted",
+    "summary": "raw command output omitted; metadata evidence retained"
+  },
+  "created_at": "2026-05-14T15:00:02Z"
+}

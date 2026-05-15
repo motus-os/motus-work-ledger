@@ -1,0 +1,54 @@
+{
+  "schema_version": "motus.work-receipt-envelope.v0.1",
+  "receipt_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "run_id": "run_invalid_missing_acceptance",
+  "work_id": "WORK-INVALID",
+  "actor": {
+    "type": "ci",
+    "id": "github-actions"
+  },
+  "runtime": {
+    "name": "example",
+    "kind": "ci"
+  },
+  "trigger": {
+    "kind": "ci"
+  },
+  "instruction_ref": {
+    "kind": "command",
+    "digest": {
+      "algorithm": "sha256",
+      "value": "2222222222222222222222222222222222222222222222222222222222222222",
+      "canonicalization": "utf8"
+    }
+  },
+  "events_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "value": "3333333333333333333333333333333333333333333333333333333333333333",
+      "canonicalization": "json.sorted.compact.v0"
+    }
+  },
+  "evidence_refs": [],
+  "tool_refs": [],
+  "outcome": {
+    "status": "success"
+  },
+  "route_summary": {
+    "status": "complete"
+  },
+  "canonicalization": {
+    "method": "json.sorted.compact.v0"
+  },
+  "hashes": {
+    "receipt": {
+      "algorithm": "sha256",
+      "value": "4444444444444444444444444444444444444444444444444444444444444444",
+      "canonicalization": "json.sorted.compact.v0"
+    }
+  },
+  "redaction": {
+    "status": "none"
+  },
+  "created_at": "2026-05-14T15:00:00Z"
+}

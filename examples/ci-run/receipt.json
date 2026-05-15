@@ -1,0 +1,101 @@
+{
+  "acceptance": {
+    "accepted_at": "2026-05-15T14:20:05Z",
+    "actor": {
+      "id": "branch-protection",
+      "type": "ci"
+    },
+    "method": "required_check_pass",
+    "status": "accepted"
+  },
+  "actor": {
+    "display": "GitHub Actions",
+    "id": "github-actions",
+    "type": "ci"
+  },
+  "canonicalization": {
+    "method": "json.sorted.compact.v0",
+    "volatile_fields": [
+      "created_at"
+    ]
+  },
+  "created_at": "2026-05-15T14:20:06Z",
+  "events_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "4461410522bba80973d889db4a9da14729bf6bd61cb959a571c04c638636d322"
+    },
+    "uri": "file://examples/ci-run/events.json"
+  },
+  "evidence_refs": [
+    {
+      "digest": {
+        "algorithm": "sha256",
+        "canonicalization": "utf8.summary.v0",
+        "value": "2222222222222222222222222222222222222222222222222222222222222222"
+      },
+      "evidence_id": "ci-summary",
+      "kind": "ci_check",
+      "redaction": {
+        "status": "none"
+      },
+      "summary": "Build, lint, and tests passed",
+      "uri": "https://github.example/actions/runs/1001"
+    }
+  ],
+  "handoff": {
+    "status": "none"
+  },
+  "hashes": {
+    "receipt": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "554c0d6ceb477fd498ca2693c3b0a0346d1660f247dc8f9aa391a03b7de6ddeb"
+    },
+    "source_export": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "4461410522bba80973d889db4a9da14729bf6bd61cb959a571c04c638636d322"
+    }
+  },
+  "instruction_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "utf8.instruction.v0",
+      "value": "09bae9bfeb4831572439877775faa84ba2d37609e805616d3b7550ff0797dd51"
+    },
+    "kind": "workflow",
+    "summary": "Run build, tests, and lint for a pull request"
+  },
+  "outcome": {
+    "closed_at": "2026-05-15T14:20:00Z",
+    "status": "success",
+    "summary": "CI checks passed"
+  },
+  "receipt_id": "sha256:554c0d6ceb477fd498ca2693c3b0a0346d1660f247dc8f9aa391a03b7de6ddeb",
+  "redaction": {
+    "status": "none"
+  },
+  "route_summary": {
+    "status": "complete"
+  },
+  "run_id": "example_ci_run_001",
+  "runtime": {
+    "kind": "sdk",
+    "name": "motus-receipt-only-python",
+    "version": "0.1.0"
+  },
+  "schema_version": "motus.work-receipt-envelope.v0.1",
+  "tool_refs": [
+    {
+      "kind": "ci",
+      "name": "github-actions"
+    }
+  ],
+  "trigger": {
+    "kind": "ci",
+    "ref": "pull_request:42"
+  },
+  "work_id": "EXAMPLE-CI-001"
+}

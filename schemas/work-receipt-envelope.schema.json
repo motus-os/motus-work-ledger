@@ -1,0 +1,259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://motus.dev/schemas/work-receipt-envelope.schema.json",
+  "title": "Motus Work Receipt Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "run_id",
+    "work_id",
+    "actor",
+    "runtime",
+    "trigger",
+    "instruction_ref",
+    "events_ref",
+    "evidence_refs",
+    "tool_refs",
+    "outcome",
+    "acceptance",
+    "route_summary",
+    "canonicalization",
+    "hashes",
+    "redaction",
+    "created_at"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "motus.work-receipt-envelope.v0.1"
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "work_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actor": {
+      "$ref": "https://motus.dev/schemas/work-receipt-envelope.schema.json#/$defs/actor"
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "kind"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["cli", "ci", "mcp", "agent", "sdk", "tool", "other"]
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "trigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["manual", "ci", "schedule", "webhook", "tool_call", "agent"]
+        },
+        "ref": {
+          "type": "string"
+        }
+      }
+    },
+    "instruction_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "digest"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["command", "contract", "prompt", "ticket", "workflow", "other"]
+        },
+        "uri": {
+          "type": "string"
+        },
+        "digest": {
+          "$ref": "https://motus.dev/schemas/work-receipt-envelope.schema.json#/$defs/digest"
+        },
+        "summary": {
+          "type": "string"
+        }
+      }
+    },
+    "events_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["digest"],
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "digest": {
+          "$ref": "https://motus.dev/schemas/work-receipt-envelope.schema.json#/$defs/digest"
+        }
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "https://motus.dev/schemas/evidence-ref.schema.json"
+      }
+    },
+    "tool_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "type": "string"
+          },
+          "digest": {
+            "$ref": "https://motus.dev/schemas/work-receipt-envelope.schema.json#/$defs/digest"
+          }
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["success", "failure", "partial", "aborted", "superseded", "unknown"]
+        },
+        "summary": {
+          "type": "string"
+        },
+        "closed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "acceptance": {
+      "$ref": "https://motus.dev/schemas/acceptance.schema.json"
+    },
+    "route_summary": {
+      "$ref": "https://motus.dev/schemas/route-summary.schema.json"
+    },
+    "handoff": {
+      "$ref": "https://motus.dev/schemas/handoff.schema.json"
+    },
+    "canonicalization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method"],
+      "properties": {
+        "method": {
+          "type": "string",
+          "const": "json.sorted.compact.v0"
+        },
+        "volatile_fields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "hashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt"],
+      "properties": {
+        "receipt": {
+          "$ref": "https://motus.dev/schemas/work-receipt-envelope.schema.json#/$defs/digest"
+        },
+        "source_export": {
+          "$ref": "https://motus.dev/schemas/work-receipt-envelope.schema.json#/$defs/digest"
+        }
+      }
+    },
+    "signatures_optional": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "redaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["none", "redacted", "withheld"]
+        },
+        "summary": {
+          "type": "string"
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["human", "agent", "service", "ci", "tool"]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "display": {
+          "type": "string"
+        }
+      }
+    },
+    "digest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm", "value", "canonicalization"],
+      "properties": {
+        "algorithm": {
+          "type": "string",
+          "enum": ["sha256"]
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "canonicalization": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

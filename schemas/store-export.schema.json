@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://motus.dev/schemas/store-export.schema.json",
+  "title": "Motus Store Export",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "exported_at", "runs", "events"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "motus.store-export.v0.1"
+    },
+    "exported_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "canonicalization": {
+      "type": "string"
+    },
+    "runs": {
+      "type": "array",
+      "items": {
+        "$ref": "https://motus.dev/schemas/work-run.schema.json"
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "https://motus.dev/schemas/work-event.schema.json"
+      }
+    }
+  }
+}

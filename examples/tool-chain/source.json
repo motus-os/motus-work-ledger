@@ -1,0 +1,75 @@
+{
+  "run_id": "example_tool_chain_001",
+  "work_id": "EXAMPLE-TOOL-CHAIN-001",
+  "actor": {
+    "type": "service",
+    "id": "automation-runner"
+  },
+  "trigger": {
+    "kind": "webhook",
+    "ref": "deploy-request-1007"
+  },
+  "instruction": {
+    "kind": "workflow",
+    "summary": "Run an automated tool chain and produce a receipt",
+    "canonical_text": "Run the deployment preparation tool chain, capture evidence references, and emit a Work Receipt."
+  },
+  "events": {
+    "uri": "file://examples/tool-chain/events.json",
+    "count": 8
+  },
+  "evidence_refs": [
+    {
+      "evidence_id": "artifact-digest",
+      "kind": "build_artifact",
+      "uri": "s3://example-artifacts/release-1007.tgz",
+      "digest": {
+        "algorithm": "sha256",
+        "value": "7777777777777777777777777777777777777777777777777777777777777777",
+        "canonicalization": "binary.sha256.v0"
+      },
+      "summary": "Build artifact digest",
+      "redaction": {
+        "status": "none"
+      }
+    }
+  ],
+  "tool_refs": [
+    {
+      "name": "build",
+      "kind": "build_tool"
+    },
+    {
+      "name": "scanner",
+      "kind": "security_tool"
+    },
+    {
+      "name": "deployer",
+      "kind": "deployment_tool"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "summary": "Tool chain completed and artifact is ready",
+    "closed_at": "2026-05-15T15:10:00Z"
+  },
+  "acceptance": {
+    "status": "accepted",
+    "actor": {
+      "type": "service",
+      "id": "deployment-policy"
+    },
+    "accepted_at": "2026-05-15T15:10:04Z",
+    "method": "policy_check_pass"
+  },
+  "route_summary": {
+    "status": "complete"
+  },
+  "handoff": {
+    "status": "none"
+  },
+  "redaction": {
+    "status": "none"
+  },
+  "created_at": "2026-05-15T15:10:05Z"
+}

@@ -1,0 +1,108 @@
+{
+  "acceptance": {
+    "accepted_at": "2026-05-15T15:10:04Z",
+    "actor": {
+      "id": "deployment-policy",
+      "type": "service"
+    },
+    "method": "policy_check_pass",
+    "status": "accepted"
+  },
+  "actor": {
+    "id": "automation-runner",
+    "type": "service"
+  },
+  "canonicalization": {
+    "method": "json.sorted.compact.v0",
+    "volatile_fields": [
+      "created_at"
+    ]
+  },
+  "created_at": "2026-05-15T15:10:05Z",
+  "events_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "fcda7db77bc026cfe5751ab84b759190ae6b6836d4deb83543f4863e04116304"
+    },
+    "uri": "file://examples/tool-chain/events.json"
+  },
+  "evidence_refs": [
+    {
+      "digest": {
+        "algorithm": "sha256",
+        "canonicalization": "binary.sha256.v0",
+        "value": "7777777777777777777777777777777777777777777777777777777777777777"
+      },
+      "evidence_id": "artifact-digest",
+      "kind": "build_artifact",
+      "redaction": {
+        "status": "none"
+      },
+      "summary": "Build artifact digest",
+      "uri": "s3://example-artifacts/release-1007.tgz"
+    }
+  ],
+  "handoff": {
+    "status": "none"
+  },
+  "hashes": {
+    "receipt": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "1209a4c6c5593cf9dfab561a5b7766e2c93af4796f3010f321f9b2a740409014"
+    },
+    "source_export": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "fcda7db77bc026cfe5751ab84b759190ae6b6836d4deb83543f4863e04116304"
+    }
+  },
+  "instruction_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "utf8.instruction.v0",
+      "value": "f16e369d9015362f7fca6a2d02bfe2d4228e63ffd9e7caee4947f5716de2b598"
+    },
+    "kind": "workflow",
+    "summary": "Run an automated tool chain and produce a receipt"
+  },
+  "outcome": {
+    "closed_at": "2026-05-15T15:10:00Z",
+    "status": "success",
+    "summary": "Tool chain completed and artifact is ready"
+  },
+  "receipt_id": "sha256:1209a4c6c5593cf9dfab561a5b7766e2c93af4796f3010f321f9b2a740409014",
+  "redaction": {
+    "status": "none"
+  },
+  "route_summary": {
+    "status": "complete"
+  },
+  "run_id": "example_tool_chain_001",
+  "runtime": {
+    "kind": "sdk",
+    "name": "motus-receipt-only-python",
+    "version": "0.1.0"
+  },
+  "schema_version": "motus.work-receipt-envelope.v0.1",
+  "tool_refs": [
+    {
+      "kind": "build_tool",
+      "name": "build"
+    },
+    {
+      "kind": "security_tool",
+      "name": "scanner"
+    },
+    {
+      "kind": "deployment_tool",
+      "name": "deployer"
+    }
+  ],
+  "trigger": {
+    "kind": "webhook",
+    "ref": "deploy-request-1007"
+  },
+  "work_id": "EXAMPLE-TOOL-CHAIN-001"
+}

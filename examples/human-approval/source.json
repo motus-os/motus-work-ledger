@@ -1,0 +1,68 @@
+{
+  "run_id": "example_human_approval_001",
+  "work_id": "EXAMPLE-HUMAN-APPROVAL-001",
+  "actor": {
+    "type": "human",
+    "id": "release-manager"
+  },
+  "trigger": {
+    "kind": "manual",
+    "ref": "release-readiness-review"
+  },
+  "instruction": {
+    "kind": "contract",
+    "summary": "Review release evidence and accept or reject readiness",
+    "canonical_text": "Review release evidence, confirm gate results, and accept readiness for publication."
+  },
+  "events": {
+    "uri": "file://examples/human-approval/events.json",
+    "count": 4
+  },
+  "evidence_refs": [
+    {
+      "evidence_id": "release-gates",
+      "kind": "gate_summary",
+      "uri": "file://examples/human-approval/gates.json",
+      "digest": {
+        "algorithm": "sha256",
+        "value": "5555555555555555555555555555555555555555555555555555555555555555",
+        "canonicalization": "json.sorted.compact.v0"
+      },
+      "summary": "Release gate summary passed",
+      "redaction": {
+        "status": "none"
+      }
+    }
+  ],
+  "tool_refs": [
+    {
+      "name": "release-checklist",
+      "kind": "document"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "summary": "Release readiness accepted",
+    "closed_at": "2026-05-15T14:50:00Z"
+  },
+  "acceptance": {
+    "status": "accepted",
+    "actor": {
+      "type": "human",
+      "id": "release-manager"
+    },
+    "accepted_at": "2026-05-15T14:50:10Z",
+    "method": "documented_review",
+    "rationale_ref": "file://examples/human-approval/approval.md"
+  },
+  "route_summary": {
+    "status": "complete"
+  },
+  "handoff": {
+    "status": "none"
+  },
+  "redaction": {
+    "status": "none"
+  },
+  "created_at": "2026-05-15T14:50:11Z"
+}

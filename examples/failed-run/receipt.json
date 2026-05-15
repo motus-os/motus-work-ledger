@@ -1,0 +1,108 @@
+{
+  "acceptance": {
+    "accepted_at": "2026-05-15T14:30:20Z",
+    "actor": {
+      "id": "operator",
+      "type": "human"
+    },
+    "method": "operator_review",
+    "rationale_ref": "file://examples/failed-run/rejection.md",
+    "status": "rejected"
+  },
+  "actor": {
+    "id": "migration-script",
+    "type": "tool"
+  },
+  "canonicalization": {
+    "method": "json.sorted.compact.v0",
+    "volatile_fields": [
+      "created_at"
+    ]
+  },
+  "created_at": "2026-05-15T14:30:21Z",
+  "events_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "385294fc5e95feb3b6bb7654833e4ca4bd133213f56a3d1070f69fabb06b41c9"
+    },
+    "uri": "file://examples/failed-run/events.json"
+  },
+  "evidence_refs": [
+    {
+      "digest": {
+        "algorithm": "sha256",
+        "canonicalization": "utf8.redacted-log.v0",
+        "value": "3333333333333333333333333333333333333333333333333333333333333333"
+      },
+      "evidence_id": "migration-error-log",
+      "kind": "log_excerpt",
+      "redaction": {
+        "reason": "Log contains customer identifiers",
+        "status": "redacted"
+      },
+      "summary": "Validation failed before write phase",
+      "uri": "file://examples/failed-run/error.log"
+    }
+  ],
+  "handoff": {
+    "evidence_refs": [
+      "migration-error-log"
+    ],
+    "reason": "Awaiting corrected input data",
+    "status": "blocked"
+  },
+  "hashes": {
+    "receipt": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "24544ff2863472e15bd974d7aaa0c8cda7193a34c5f65ba30fc70ed2522ec3c8"
+    },
+    "source_export": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "385294fc5e95feb3b6bb7654833e4ca4bd133213f56a3d1070f69fabb06b41c9"
+    }
+  },
+  "instruction_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "utf8.instruction.v0",
+      "value": "2a9175ee81f3cceec9304a63e56918df7faba6be28fb9b5c17933d78de6038d9"
+    },
+    "kind": "command",
+    "summary": "Run a dry-run migration"
+  },
+  "outcome": {
+    "closed_at": "2026-05-15T14:30:00Z",
+    "status": "failure",
+    "summary": "Dry-run validation failed before any writes"
+  },
+  "receipt_id": "sha256:24544ff2863472e15bd974d7aaa0c8cda7193a34c5f65ba30fc70ed2522ec3c8",
+  "redaction": {
+    "status": "redacted",
+    "summary": "Customer identifiers withheld from the receipt"
+  },
+  "route_summary": {
+    "reason": "Input data must be corrected before retry",
+    "status": "blocked"
+  },
+  "run_id": "example_failed_run_001",
+  "runtime": {
+    "kind": "sdk",
+    "name": "motus-receipt-only-python",
+    "version": "0.1.0"
+  },
+  "schema_version": "motus.work-receipt-envelope.v0.1",
+  "tool_refs": [
+    {
+      "kind": "database_tool",
+      "name": "migration-script"
+    }
+  ],
+  "trigger": {
+    "kind": "manual",
+    "ref": "operator-request"
+  },
+  "work_id": "EXAMPLE-FAILED-001"
+}

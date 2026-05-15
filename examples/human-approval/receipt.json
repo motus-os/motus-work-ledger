@@ -1,0 +1,101 @@
+{
+  "acceptance": {
+    "accepted_at": "2026-05-15T14:50:10Z",
+    "actor": {
+      "id": "release-manager",
+      "type": "human"
+    },
+    "method": "documented_review",
+    "rationale_ref": "file://examples/human-approval/approval.md",
+    "status": "accepted"
+  },
+  "actor": {
+    "id": "release-manager",
+    "type": "human"
+  },
+  "canonicalization": {
+    "method": "json.sorted.compact.v0",
+    "volatile_fields": [
+      "created_at"
+    ]
+  },
+  "created_at": "2026-05-15T14:50:11Z",
+  "events_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "2e0f01bda95952a64b80e930b5a541357d95eee0e6fa940b3d315cc0cd1a78ee"
+    },
+    "uri": "file://examples/human-approval/events.json"
+  },
+  "evidence_refs": [
+    {
+      "digest": {
+        "algorithm": "sha256",
+        "canonicalization": "json.sorted.compact.v0",
+        "value": "5555555555555555555555555555555555555555555555555555555555555555"
+      },
+      "evidence_id": "release-gates",
+      "kind": "gate_summary",
+      "redaction": {
+        "status": "none"
+      },
+      "summary": "Release gate summary passed",
+      "uri": "file://examples/human-approval/gates.json"
+    }
+  ],
+  "handoff": {
+    "status": "none"
+  },
+  "hashes": {
+    "receipt": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "3fa9b8d680d0b9309d09f929f52aabc4e68aa0c8930909abdebb29e5f90c646d"
+    },
+    "source_export": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "2e0f01bda95952a64b80e930b5a541357d95eee0e6fa940b3d315cc0cd1a78ee"
+    }
+  },
+  "instruction_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "utf8.instruction.v0",
+      "value": "bad5a31f05bf8d696294dd1ec5fc8711b432777e7db988cc4f7f9d1aabf7cb31"
+    },
+    "kind": "contract",
+    "summary": "Review release evidence and accept or reject readiness"
+  },
+  "outcome": {
+    "closed_at": "2026-05-15T14:50:00Z",
+    "status": "success",
+    "summary": "Release readiness accepted"
+  },
+  "receipt_id": "sha256:3fa9b8d680d0b9309d09f929f52aabc4e68aa0c8930909abdebb29e5f90c646d",
+  "redaction": {
+    "status": "none"
+  },
+  "route_summary": {
+    "status": "complete"
+  },
+  "run_id": "example_human_approval_001",
+  "runtime": {
+    "kind": "sdk",
+    "name": "motus-receipt-only-python",
+    "version": "0.1.0"
+  },
+  "schema_version": "motus.work-receipt-envelope.v0.1",
+  "tool_refs": [
+    {
+      "kind": "document",
+      "name": "release-checklist"
+    }
+  ],
+  "trigger": {
+    "kind": "manual",
+    "ref": "release-readiness-review"
+  },
+  "work_id": "EXAMPLE-HUMAN-APPROVAL-001"
+}

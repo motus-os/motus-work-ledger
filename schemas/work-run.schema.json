@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://motus.dev/schemas/work-run.schema.json",
+  "title": "Motus Work Run",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "run_id", "status", "started_at"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "motus.work-run.v0.1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "work_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["open", "closed"]
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "closed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "git_sha": {
+      "type": "string"
+    },
+    "cwd_ref": {
+      "type": "string"
+    },
+    "producer_id": {
+      "type": "string"
+    },
+    "outcome_status": {
+      "type": "string",
+      "enum": ["success", "failure", "partial", "aborted", "superseded", "unknown"]
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "run_id": "example_mixed_human_ai_001",
+  "work_id": "EXAMPLE-MIXED-HUMAN-AI-001",
+  "actor": {
+    "type": "agent",
+    "id": "assistant-agent",
+    "display": "Assistant Agent with Human Review"
+  },
+  "trigger": {
+    "kind": "agent",
+    "ref": "planning-session"
+  },
+  "instruction": {
+    "kind": "prompt",
+    "summary": "Draft a plan, then route to a human for decision",
+    "canonical_text": "Analyze the support backlog, draft a triage plan, and route the plan to a human owner for acceptance."
+  },
+  "events": {
+    "uri": "file://examples/mixed-human-ai-run/events.json",
+    "count": 7
+  },
+  "evidence_refs": [
+    {
+      "evidence_id": "backlog-snapshot",
+      "kind": "dataset_snapshot",
+      "uri": "file://examples/mixed-human-ai-run/backlog-summary.json",
+      "digest": {
+        "algorithm": "sha256",
+        "value": "6666666666666666666666666666666666666666666666666666666666666666",
+        "canonicalization": "json.sorted.compact.v0"
+      },
+      "summary": "Redacted backlog summary used for planning",
+      "redaction": {
+        "status": "withheld",
+        "reason": "Contains customer support content"
+      }
+    }
+  ],
+  "tool_refs": [
+    {
+      "name": "ticket-export",
+      "kind": "support_tool"
+    },
+    {
+      "name": "assistant-agent",
+      "kind": "agent_runtime"
+    }
+  ],
+  "outcome": {
+    "status": "success",
+    "summary": "Triage plan drafted for human acceptance",
+    "closed_at": "2026-05-15T15:00:00Z"
+  },
+  "acceptance": {
+    "status": "pending",
+    "actor": {
+      "type": "human",
+      "id": "support-lead"
+    },
+    "method": "owner_review"
+  },
+  "route_summary": {
+    "status": "handoff",
+    "next_actor": {
+      "type": "human",
+      "id": "support-lead"
+    },
+    "reason": "Human owner must approve operational prioritization"
+  },
+  "handoff": {
+    "status": "ready",
+    "receiver": {
+      "type": "human",
+      "id": "support-lead"
+    },
+    "expected_action": "Accept, reject, or revise the triage plan",
+    "evidence_refs": ["backlog-snapshot"]
+  },
+  "redaction": {
+    "status": "withheld",
+    "summary": "Customer support details are referenced but not embedded"
+  },
+  "created_at": "2026-05-15T15:00:01Z"
+}

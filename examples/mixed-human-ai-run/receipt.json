@@ -1,0 +1,119 @@
+{
+  "acceptance": {
+    "actor": {
+      "id": "support-lead",
+      "type": "human"
+    },
+    "method": "owner_review",
+    "status": "pending"
+  },
+  "actor": {
+    "display": "Assistant Agent with Human Review",
+    "id": "assistant-agent",
+    "type": "agent"
+  },
+  "canonicalization": {
+    "method": "json.sorted.compact.v0",
+    "volatile_fields": [
+      "created_at"
+    ]
+  },
+  "created_at": "2026-05-15T15:00:01Z",
+  "events_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "4b2413abec376f7c093c4e0a9c5a146be5677d07c191fbe278118ee9d28539a3"
+    },
+    "uri": "file://examples/mixed-human-ai-run/events.json"
+  },
+  "evidence_refs": [
+    {
+      "digest": {
+        "algorithm": "sha256",
+        "canonicalization": "json.sorted.compact.v0",
+        "value": "6666666666666666666666666666666666666666666666666666666666666666"
+      },
+      "evidence_id": "backlog-snapshot",
+      "kind": "dataset_snapshot",
+      "redaction": {
+        "reason": "Contains customer support content",
+        "status": "withheld"
+      },
+      "summary": "Redacted backlog summary used for planning",
+      "uri": "file://examples/mixed-human-ai-run/backlog-summary.json"
+    }
+  ],
+  "handoff": {
+    "evidence_refs": [
+      "backlog-snapshot"
+    ],
+    "expected_action": "Accept, reject, or revise the triage plan",
+    "receiver": {
+      "id": "support-lead",
+      "type": "human"
+    },
+    "status": "ready"
+  },
+  "hashes": {
+    "receipt": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "1b734c84931a0a4e0e9837b981bbec8f0950955ed9d62e6879353e8465b5ba8f"
+    },
+    "source_export": {
+      "algorithm": "sha256",
+      "canonicalization": "json.sorted.compact.v0",
+      "value": "4b2413abec376f7c093c4e0a9c5a146be5677d07c191fbe278118ee9d28539a3"
+    }
+  },
+  "instruction_ref": {
+    "digest": {
+      "algorithm": "sha256",
+      "canonicalization": "utf8.instruction.v0",
+      "value": "ccd8ca777ce44a63e77fbb328aac13fcdcae8f64edc6f4d6151534160ae4e9ab"
+    },
+    "kind": "prompt",
+    "summary": "Draft a plan, then route to a human for decision"
+  },
+  "outcome": {
+    "closed_at": "2026-05-15T15:00:00Z",
+    "status": "success",
+    "summary": "Triage plan drafted for human acceptance"
+  },
+  "receipt_id": "sha256:1b734c84931a0a4e0e9837b981bbec8f0950955ed9d62e6879353e8465b5ba8f",
+  "redaction": {
+    "status": "withheld",
+    "summary": "Customer support details are referenced but not embedded"
+  },
+  "route_summary": {
+    "next_actor": {
+      "id": "support-lead",
+      "type": "human"
+    },
+    "reason": "Human owner must approve operational prioritization",
+    "status": "handoff"
+  },
+  "run_id": "example_mixed_human_ai_001",
+  "runtime": {
+    "kind": "sdk",
+    "name": "motus-receipt-only-python",
+    "version": "0.1.0"
+  },
+  "schema_version": "motus.work-receipt-envelope.v0.1",
+  "tool_refs": [
+    {
+      "kind": "support_tool",
+      "name": "ticket-export"
+    },
+    {
+      "kind": "agent_runtime",
+      "name": "assistant-agent"
+    }
+  ],
+  "trigger": {
+    "kind": "agent",
+    "ref": "planning-session"
+  },
+  "work_id": "EXAMPLE-MIXED-HUMAN-AI-001"
+}
