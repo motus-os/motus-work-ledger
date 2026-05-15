@@ -48,6 +48,7 @@ Versioning and release notes:
 - [Changelog](CHANGELOG.md)
 - [Schema Registry](schemas/index.json)
 - [Batch Recap Template](docs/batch-recap-template.md)
+- [External Review Package](docs/external-review-package.md)
 
 ## Validate A Receipt
 
