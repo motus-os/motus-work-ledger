@@ -19,7 +19,8 @@ A Level 1 implementation can:
 1. emit durable work events,
 2. preserve event ordering within a run,
 3. derive a Work Receipt deterministically from those events,
-4. pass Level 0 checks.
+4. expose the Store export digest used by the receipt,
+5. pass Level 0 checks.
 
 ## Level 2: Governed Handoff
 
@@ -35,4 +36,3 @@ A Level 2 implementation can represent:
 
 A Level 3 implementation supports optional signatures, attestations, or other
 verification envelopes while preserving canonical receipt validation.
-

@@ -69,11 +69,11 @@ def load_schema_store() -> dict[str, dict[str, Any]]:
     return schemas
 
 
-def validate_schema(document: dict[str, Any]) -> None:
+def validate_schema(document: dict[str, Any], schema_id: str = ENVELOPE_SCHEMA_ID) -> None:
     if jsonschema is None:
         raise SystemExit("jsonschema is required: pip install jsonschema")
     store = load_schema_store()
-    schema = store[ENVELOPE_SCHEMA_ID]
+    schema = store[schema_id]
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=DeprecationWarning)
         resolver = jsonschema.RefResolver.from_schema(schema, store=store)
