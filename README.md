@@ -78,6 +78,16 @@ python conformance/implementations/receipt-only-python/emit_receipt.py \
 python conformance/validator/validate_receipt.py /tmp/motus-work-receipt.json
 ```
 
+Generate and validate the event-backed second implementation:
+
+```bash
+python conformance/implementations/event-backed-python/emit_from_events.py \
+  --input conformance/implementations/event-backed-python/input.example.json \
+  --output-dir /tmp/motus-work-ledger-event-backed
+python conformance/validator/validate_receipt.py \
+  /tmp/motus-work-ledger-event-backed/receipt.json
+```
+
 ## Relationship To `/motus`
 
 `/motus` is the reference implementation. It provides the CLI, Store-backed

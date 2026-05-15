@@ -5,7 +5,10 @@ want to emit Motus-compatible receipts without importing `motusos`.
 
 ## Scope
 
-The v0.1 conformance target is Level 0: Receipt-only.
+The v0.1 conformance target includes:
+
+- Level 0: Receipt-only.
+- Level 1: Event-backed.
 
 A Level 0 implementation can:
 
@@ -13,6 +16,14 @@ A Level 0 implementation can:
 2. validate it against `schemas/work-receipt-envelope.schema.json`,
 3. preserve canonical JSON hashing,
 4. pass the golden fixture checks.
+
+A Level 1 implementation can:
+
+1. emit a Store export with a bounded run and ordered append-only events,
+2. derive a Work Receipt from those events,
+3. validate the Store export, Work Receipt, and projection manifest,
+4. preserve source-export digest linkage,
+5. produce deterministic output.
 
 ## Commands
 
@@ -45,6 +56,16 @@ python conformance/implementations/receipt-only-python/emit_receipt.py \
 python conformance/validator/validate_receipt.py /tmp/motus-receipt.json
 ```
 
+Generate and validate the bundled event-backed second implementation:
+
+```bash
+python conformance/implementations/event-backed-python/emit_from_events.py \
+  --input conformance/implementations/event-backed-python/input.example.json \
+  --output-dir /tmp/motus-work-ledger-event-backed
+python conformance/validator/validate_receipt.py \
+  /tmp/motus-work-ledger-event-backed/receipt.json
+```
+
 ## Canonical Hash
 
 The validator computes SHA-256 over UTF-8 JSON with sorted keys and compact
@@ -57,4 +78,4 @@ the computed hash must match that golden value.
 
 This conformance suite does not validate agent behavior, workflow routing,
 policy compliance, or hosted orchestration. It validates the portable receipt
-shape.
+shape and the Level 1 event-backed projection mechanics.
