@@ -94,9 +94,13 @@ Abbreviated 5-phase cycle.
 
 ---
 
-## Stabilization Mode (Mandatory Until 0.4.0)
+## Public Runtime Truth Mode (Mandatory Until Superseded)
 
-Motus is currently stabilizing the `0.3.x` line.
+Motus public releases are in bounded public-truth mode for the `0.x` line.
+Release work must keep the live artifact, runtime behavior, documentation,
+schemas, and evidence aligned with the current Store-first model:
+project-local `.motus/kernel-store.db`, runs, events, kind versions, locks,
+and Work Receipt projections.
 
 Standard path:
 
@@ -312,7 +316,10 @@ Every release MUST produce an evidence bundle. Release is BLOCKED if any artifac
 If the release process relies on Motus Expanded automation, these preconditions are mandatory:
 
 - Context snapshot verifies (fail closed) per `docs/standards/CONTEXT-SNAPSHOT-STANDARD.md`.
-- Coordination DB schema satisfies the minimal contract per `docs/standards/SCHEMA-TRANSACTION-CONTRACT.md`.
+- Store schema satisfies the current public contract: `runs`, `events`,
+  `kind_versions`, and `locks`. Internal-only compatibility automation that
+  still relies on a legacy coordination DB must say so explicitly in release
+  evidence and must not be presented as public runtime truth.
 - Schema drift check passes per `.ai/scripts/check-schema-drift.sh`.
 
 ### Claims Posture (Mandatory)
@@ -486,16 +493,19 @@ GO/NO-GO gate requirement:
 | `doctor-results.json` | `motus doctor --json` | All checks pass |
 | `import-path.txt` | `python -c "import motus; print(motus.__file__)"` | Canonical path |
 | `commit-sha.txt` | `git rev-parse HEAD` | Match release tag |
-| `health-ledger.md` | `packages/cli/docs/quality/` | Updated within 24h |
-| `health-baseline.json` | `packages/cli/docs/quality/` | Exists |
-| `health-policy.json` | `packages/cli/docs/quality/` | Exists |
+| `wheel-file-list.txt` | built wheel inventory | No SQL migrations or `docs/quality` |
+| `sdist-file-list.txt` | built sdist inventory | No SQL migrations or `docs/quality` |
+| `clean-command-matrix.json` | wheel-installed runtime matrix | No default HOME-scoped Motus state |
+| `filesystem-side-effects.txt` | fresh HOME/project proof | Only allowed project-local Store writes |
+| `store-table-proof.txt` | project Store inspection | Tables are `events`, `kind_versions`, `locks`, `runs` |
 
 ### Clean Environment Requirement
 
 All test and evidence generation MUST run in a clean virtual environment:
 
 ```bash
-# Create clean venv
+# Create clean venv. This temporary path is release evidence workspace only;
+# it is not Motus runtime state.
 python3 -m venv /tmp/release-venv
 source /tmp/release-venv/bin/activate
 
@@ -527,10 +537,8 @@ bandit -r src/ -f json -o .release-evidence/bandit-results.json
 # 3. Dependency audit
 pip-audit --format json -o .release-evidence/pip-audit-results.json
 
-# 4. Health ledger (must be manually updated)
-cp packages/cli/docs/quality/health-ledger.md .release-evidence/
-cp packages/cli/docs/quality/health-baseline.json .release-evidence/
-cp packages/cli/docs/quality/health-policy.json .release-evidence/
+# 4. Artifact/runtime evidence for Motus CLI releases
+scripts/release/generate-release-evidence.sh X.Y.Z
 ```
 
 ### Evidence Verification
@@ -543,9 +551,10 @@ motus release check
 # [PASS] pytest-results.json: 0 failures
 # [PASS] bandit-results.json: 0 HIGH/CRITICAL
 # [PASS] pip-audit-results.json: 0 vulnerabilities
-# [PASS] health-ledger.md: updated 2026-01-05
-# [PASS] health-baseline.json: exists
-# [PASS] health-policy.json: exists
+# [PASS] wheel-file-list.txt: no SQL migrations or docs/quality
+# [PASS] sdist-file-list.txt: no SQL migrations or docs/quality
+# [PASS] clean-command-matrix.json: no legacy HOME state
+# [PASS] store-table-proof.txt: Store tables match expected contract
 #
 # Evidence bundle: PASS
 # Release: ALLOWED
@@ -616,7 +625,7 @@ with open('coverage.json') as f:
 
 ### Phase 1: Planning
 
-**Gate:** Scope locked in coordination.db
+**Gate:** Scope locked in the governed release work item and evidence bundle
 
 **Checklist:**
 - [ ] Version number confirmed (follows versioning contract)
@@ -629,12 +638,10 @@ with open('coverage.json') as f:
 
 **Command:**
 ```bash
-# Lock scope in coordination.db
-sqlite3 ~/.motus/coordination.db "
-  UPDATE release_cycles
-  SET scope_locked_at = datetime('now')
-  WHERE version = 'X.Y.Z'
-"
+# Record the release scope lock through governed work evidence.
+# Do not hand-edit legacy coordination DB state for public release scope.
+mkdir -p .ai/releases
+git status --short > .ai/releases/RELEASE-X.Y.Z-SCOPE-LOCK.txt
 ```
 
 ### Phase 2: Build
@@ -896,9 +903,13 @@ motus doctor     # Should pass
 **Step 2: Assessment (< 15 minutes)**
 
 ```bash
-# Gather evidence
-motus doctor --json > /tmp/incident-doctor.json
-sqlite3 ~/.motus/coordination.db ".dump" > /tmp/incident-db.sql
+# Gather evidence in an explicit temporary incident workspace. This path is not
+# Motus runtime state.
+INCIDENT_DIR="${TMPDIR:-/tmp}/motus-incident-${VERSION}"
+mkdir -p "${INCIDENT_DIR}"
+motus doctor --json > "${INCIDENT_DIR}/doctor.json"
+motus db stats > "${INCIDENT_DIR}/store-stats.txt"
+sqlite3 "${MOTUS_KERNEL_STORE_PATH:-.motus/kernel-store.db}" ".tables" > "${INCIDENT_DIR}/store-tables.txt"
 
 # Document the failure mode
 # - What command/action triggered the failure?
@@ -917,7 +928,7 @@ sqlite3 ~/.motus/coordination.db ".dump" > /tmp/incident-db.sql
 
 # 3. Create incident issue
 gh issue create --title "INCIDENT: v${VERSION} rollback" \
-  --body "$(cat /tmp/incident-doctor.json)"
+  --body-file "${INCIDENT_DIR}/doctor.json"
 ```
 
 **Step 4: Fix and Re-release**
@@ -927,11 +938,11 @@ gh issue create --title "INCIDENT: v${VERSION} rollback" \
 git checkout -b hotfix/X.Y.Z+1 vX.Y.Z
 
 # 2. Fix the issue
-# - Reproduce on copy of affected DB
-# - Capture exact failing SQL/error
+# - Reproduce on a copy of the affected Store when data is involved
+# - Capture exact failing command/error
 # - Patch the code
 # - Add regression test
-# - Run migration twice (prove idempotency)
+# - Run Store initialization or migration twice when applicable (prove idempotency)
 
 # 3. Follow abbreviated release cycle (Type B)
 # DO NOT skip evidence bundle or gates
@@ -1091,7 +1102,7 @@ Before production deploy:
 | `scripts/release/bump-version.py` | Bump version across all files |
 | `scripts/release/generate-changelog.py` | Generate changelog from commits |
 | `scripts/release/pre-release-check.py` | Run all gates in sequence (requires explicit product root for Motus CLI) |
-| `scripts/release/create-release-cycle.sh` | Seed release cycle tasks in coordination.db |
+| `scripts/release/create-release-cycle.sh` | Seed release-cycle work items and evidence |
 | `scripts/release/archive-release-artifacts.sh` | Archive prior release artifacts |
 | `scripts/generate-public-surfaces.py` | Generate README + messaging.json |
 | `motus release check` | Verify evidence bundle |
