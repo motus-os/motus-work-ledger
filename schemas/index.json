@@ -2,6 +2,11 @@
   "schema_registry_version": "motus.schema-registry.v0.1",
   "base_uri": "https://motus.dev/schemas/",
   "resolution": "Use local repository paths until motus.dev serves these schema identifiers directly.",
+  "hosted_resolution": {
+    "status": "not_served_in_alpha",
+    "decision": "Schema $id values are canonical identifiers during alpha, not network retrieval URLs.",
+    "supported_resolution": "Use this registry's local path map or the bundled conformance validator."
+  },
   "schemas": [
     {
       "id": "https://motus.dev/schemas/acceptance.schema.json",

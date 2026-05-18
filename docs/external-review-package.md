@@ -28,6 +28,8 @@ Reference implementation context:
 2. Schema correctness:
    - every schema is strict where practical,
    - `schemas/index.json` maps ids to files,
+   - alpha `$id` values are treated as canonical identifiers, not hosted fetch
+     URLs, while `hosted_resolution.status` is `not_served_in_alpha`,
    - schema ids match file `$id` values,
    - receipt examples validate.
 3. Semantic convention alignment:
@@ -118,7 +120,8 @@ Pass only if:
 Hold if:
 
 1. following the semantic conventions produces schema-invalid receipts,
-2. schema registry resolution requires private knowledge,
+2. schema registry resolution requires private knowledge or assumes network
+   resolution while `hosted_resolution.status` is `not_served_in_alpha`,
 3. conformance does not catch obvious invalid receipt shapes,
 4. the release cannot be reconstructed from tag, manifest, and assets,
 5. `/motus` is presented as the canonical portable model instead of the

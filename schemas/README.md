@@ -3,12 +3,19 @@
 This directory contains the strict JSON schemas for Motus Work Ledger objects.
 
 The canonical schema identifiers use the `https://motus.dev/schemas/` namespace.
-Until those URLs are served directly, validators should resolve them through
-the local registry in `schemas/index.json` or through the bundled validator.
+During alpha, those `$id` values are identifiers, not network retrieval URLs.
+Validators should resolve them through the local registry in `schemas/index.json`
+or through the bundled validator.
+
+Do not configure alpha validators to fetch schemas from `motus.dev/schemas/`.
+Hosted schema URLs require a drift-safe publishing path and a registry update
+that changes `hosted_resolution.status` from `not_served_in_alpha`.
 
 ## Registry
 
 `schemas/index.json` maps each schema id to the repository path that defines it.
+It also records the hosted-resolution decision so reviewers can tell whether
+the identifiers are expected to resolve over the network.
 
 Verify the registry:
 

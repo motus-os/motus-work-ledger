@@ -22,6 +22,19 @@ def main() -> int:
     entries = registry.get("schemas")
     if not isinstance(entries, list):
         return fail("schemas/index.json must contain a schemas array")
+    hosted_resolution = registry.get("hosted_resolution")
+    if not isinstance(hosted_resolution, dict):
+        return fail("schemas/index.json must contain hosted_resolution")
+    hosted_status = hosted_resolution.get("status")
+    if hosted_status not in {"not_served_in_alpha", "served"}:
+        return fail("hosted_resolution.status must be not_served_in_alpha or served")
+    if hosted_status == "not_served_in_alpha":
+        resolution = registry.get("resolution")
+        supported = hosted_resolution.get("supported_resolution")
+        if not isinstance(resolution, str) or "local" not in resolution.lower():
+            return fail("not_served_in_alpha registry must document local resolution")
+        if not isinstance(supported, str) or "local" not in supported.lower():
+            return fail("not_served_in_alpha hosted_resolution must document local resolution")
 
     actual_paths = {
         path.relative_to(REPO_ROOT).as_posix() for path in SCHEMAS_DIR.glob("*.schema.json")
