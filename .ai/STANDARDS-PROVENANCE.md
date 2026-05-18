@@ -19,7 +19,7 @@ ambiguous fallback paths.
 | `.ai/WORKFLOW-GATE-STANDARD.md` | `f6cc6fb61966da0738d095f62e663969354bf2327a4f3649dbc0d77298f2b4f2` |
 | `.ai/CHANGE-PROTOCOL.md` | `f7dba68508875bc85d9d44e3ea392ca49cd0da5a8388e18235cf3527ecf080a8` |
 | `.ai/cr/CR-REVIEW-CHECKLIST.md` | `da8a3c66dcbde7abaa74f617e40236d70dce311bdf924d9a4d58d5b0ac6cfd5d` |
-| `.ai/RELEASE-STANDARD.md` | `b3c0f1b64c1875a00924a69158ab80a0f71a212b119ab2b399d06260673e8741` |
+| `.ai/RELEASE-STANDARD.md` | `be7fb67a8efbf80d120f9afaf98dc1c468bbdff05a1ae2f6bbdba0735b205fb1` |
 
 ## Resolution Rule
 

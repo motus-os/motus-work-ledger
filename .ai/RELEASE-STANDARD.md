@@ -638,10 +638,43 @@ with open('coverage.json') as f:
 
 **Command:**
 ```bash
-# Record the release scope lock through governed work evidence.
+# Record the release scope lock through governed work evidence. Scope items
+# must be explicit; an empty or inferred worktree status is not a scope lock.
 # Do not hand-edit legacy coordination DB state for public release scope.
 mkdir -p .ai/releases
-git status --short > .ai/releases/RELEASE-X.Y.Z-SCOPE-LOCK.txt
+VERSION="${VERSION:?set release version, for example 0.5.4}"
+MOTUS_WORK_ITEM_ID="${MOTUS_WORK_ITEM_ID:?set governed work item id}"
+MOTUS_RELEASE_SCOPE_ITEMS_JSON="${MOTUS_RELEASE_SCOPE_ITEMS_JSON:?set JSON array of scoped work item ids}"
+python3 - <<'PY'
+from __future__ import annotations
+
+import datetime as dt
+import json
+import os
+import subprocess
+from pathlib import Path
+
+version = os.environ["VERSION"]
+scope_items = json.loads(os.environ["MOTUS_RELEASE_SCOPE_ITEMS_JSON"])
+if not isinstance(scope_items, list) or not scope_items or not all(
+    isinstance(item, str) and item.strip() for item in scope_items
+):
+    raise SystemExit(
+        "MOTUS_RELEASE_SCOPE_ITEMS_JSON must be a non-empty JSON array of work item ids"
+    )
+
+scope_lock = {
+    "release_id": version,
+    "locked_at": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
+    "work_item_id": os.environ["MOTUS_WORK_ITEM_ID"],
+    "scope_item_ids": scope_items,
+    "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
+}
+Path(f".ai/releases/RELEASE-{version}-SCOPE-LOCK.json").write_text(
+    json.dumps(scope_lock, indent=2, sort_keys=True) + "\n",
+    encoding="utf-8",
+)
+PY
 ```
 
 ### Phase 2: Build
